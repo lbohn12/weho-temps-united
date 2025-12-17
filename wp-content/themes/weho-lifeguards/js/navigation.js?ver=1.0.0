@@ -1,0 +1,147 @@
+/**
+ * Navigation JavaScript for West Hollywood Lifeguards
+ * Handles mobile menu toggle and smooth scrolling
+ */
+
+(function() {
+    'use strict';
+
+    // Wait for DOM to be ready
+    document.addEventListener('DOMContentLoaded', function() {
+
+        // Mobile Menu Toggle
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navMenu = document.querySelector('.nav-menu');
+
+        if (menuToggle && navMenu) {
+            menuToggle.addEventListener('click', function() {
+                const expanded = menuToggle.getAttribute('aria-expanded') === 'true';
+
+                // Toggle aria-expanded attribute
+                menuToggle.setAttribute('aria-expanded', !expanded);
+
+                // Toggle menu visibility
+                navMenu.classList.toggle('toggled');
+            });
+
+            // Close menu when clicking outside
+            document.addEventListener('click', function(event) {
+                const isClickInside = menuToggle.contains(event.target) || navMenu.contains(event.target);
+
+                if (!isClickInside && navMenu.classList.contains('toggled')) {
+                    menuToggle.setAttribute('aria-expanded', 'false');
+                    navMenu.classList.remove('toggled');
+                }
+            });
+
+            // Close menu when clicking a menu item
+            const menuLinks = navMenu.querySelectorAll('a');
+            menuLinks.forEach(function(link) {
+                link.addEventListener('click', function() {
+                    menuToggle.setAttribute('aria-expanded', 'false');
+                    navMenu.classList.remove('toggled');
+                });
+            });
+        }
+
+        // Smooth Scrolling for Anchor Links
+        const anchorLinks = document.querySelectorAll('a[href^="#"]');
+        anchorLinks.forEach(function(link) {
+            link.addEventListener('click', function(e) {
+                const href = link.getAttribute('href');
+
+                // Ignore if it's just "#" or empty
+                if (href === '#' || href === '') {
+                    return;
+                }
+
+                const target = document.querySelector(href);
+
+                if (target) {
+                    e.preventDefault();
+
+                    // Calculate offset for sticky header
+                    const header = document.querySelector('.site-header');
+                    const headerHeight = header ? header.offsetHeight : 0;
+                    const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - headerHeight - 20;
+
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Header scroll effect (add shadow on scroll)
+        const header = document.querySelector('.site-header');
+
+        if (header) {
+            let lastScroll = 0;
+
+            window.addEventListener('scroll', function() {
+                const currentScroll = window.pageYOffset;
+
+                if (currentScroll > 50) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+
+                lastScroll = currentScroll;
+            });
+        }
+
+        // Trap focus in mobile menu when open (accessibility)
+        if (menuToggle && navMenu) {
+            navMenu.addEventListener('keydown', function(e) {
+                // Only if menu is toggled
+                if (!navMenu.classList.contains('toggled')) {
+                    return;
+                }
+
+                const focusableElements = navMenu.querySelectorAll('a, button');
+                const firstFocusable = focusableElements[0];
+                const lastFocusable = focusableElements[focusableElements.length - 1];
+
+                // Tab key
+                if (e.key === 'Tab') {
+                    if (e.shiftKey) { // Shift + Tab
+                        if (document.activeElement === firstFocusable) {
+                            lastFocusable.focus();
+                            e.preventDefault();
+                        }
+                    } else { // Tab
+                        if (document.activeElement === lastFocusable) {
+                            firstFocusable.focus();
+                            e.preventDefault();
+                        }
+                    }
+                }
+
+                // Escape key closes menu
+                if (e.key === 'Escape') {
+                    menuToggle.setAttribute('aria-expanded', 'false');
+                    navMenu.classList.remove('toggled');
+                    menuToggle.focus();
+                }
+            });
+        }
+
+        // Handle window resize (close mobile menu if resized to desktop)
+        let resizeTimer;
+        window.addEventListener('resize', function() {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(function() {
+                if (window.innerWidth > 960 && navMenu && navMenu.classList.contains('toggled')) {
+                    if (menuToggle) {
+                        menuToggle.setAttribute('aria-expanded', 'false');
+                    }
+                    navMenu.classList.remove('toggled');
+                }
+            }, 250);
+        });
+
+    });
+
+})();
