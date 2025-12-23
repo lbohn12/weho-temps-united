@@ -198,18 +198,26 @@ window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/16
                         If you are ready to sign your union authorization card or have questions about the process, please reach out through one of these secure channels:
                     </p>
 
-                    <ul style="line-height: 1.8; color: var(--text-dark); margin-bottom: 0; font-size: 1.1rem; list-style-type: none; padding-left: 0;">
+                    <style>
+                        .how-to-join-steps a { overflow-wrap: anywhere; word-break: break-word; }
+                        .how-to-join-steps .step-content { overflow-wrap: anywhere; word-break: break-word; }
+                        @media (max-width: 600px) {
+                            .how-to-join-steps li { flex-direction: column; align-items: flex-start; gap: 6px; }
+                            .how-to-join-steps .step-label { min-width: 0; }
+                        }
+                    </style>
+                    <ul class="how-to-join-steps" style="line-height: 1.8; color: var(--text-dark); margin-bottom: 0; font-size: 1.1rem; list-style-type: none; padding-left: 0;">
                         <li style="margin-bottom: 15px; display: flex; align-items: flex-start; gap: 15px;">
-                            <span style="color: var(--afscme-green); font-weight: bold; min-width: 85px; flex-shrink: 0; white-space: nowrap;">Step 1:</span>
-                            <span>Talk to a <strong>trusted coworker</strong> who is already involved in the organizing committee.</span>
+                            <span class="step-label" style="color: var(--afscme-green); font-weight: bold; min-width: 85px; flex-shrink: 0; white-space: nowrap;">Step 1:</span>
+                            <span class="step-content">Talk to a <strong>trusted coworker</strong> who is already involved in the organizing committee.</span>
                         </li>
                         <li style="margin-bottom: 15px; display: flex; align-items: flex-start; gap: 15px;">
-                            <span style="color: var(--afscme-green); font-weight: bold; min-width: 85px; flex-shrink: 0; white-space: nowrap;">Step 2:</span>
-                            <span>Email us at <a href="mailto:info@wehotempsunited.org" style="color: var(--afscme-green); font-weight: 600;">info@wehotempsunited.org</a> from your <strong>personal email address</strong>.</span>
+                            <span class="step-label" style="color: var(--afscme-green); font-weight: bold; min-width: 85px; flex-shrink: 0; white-space: nowrap;">Step 2:</span>
+                            <span class="step-content">Email us at <a href="mailto:info@wehotempsunited.org" style="color: var(--afscme-green); font-weight: 600;">info@wehotempsunited.org</a> from your <strong>personal email address</strong>.</span>
                         </li>
                         <li style="display: flex; align-items: flex-start; gap: 15px;">
-                            <span style="color: var(--afscme-green); font-weight: bold; min-width: 85px; flex-shrink: 0; white-space: nowrap;">Step 3:</span>
-                            <span>Text or call us at <a href="tel:+14159490048" style="color: var(--afscme-green); font-weight: 600;">415-949-0048</a>.</span>
+                            <span class="step-label" style="color: var(--afscme-green); font-weight: bold; min-width: 85px; flex-shrink: 0; white-space: nowrap;">Step 3:</span>
+                            <span class="step-content">Text or call us at <a href="tel:+14159490048" style="color: var(--afscme-green); font-weight: 600;">415-949-0048</a>.</span>
                         </li>
                     </ul>
                 </div>
